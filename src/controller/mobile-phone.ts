@@ -5,25 +5,8 @@
  * @Last Modified time: 2021-01-09 14:11:17
  */
 
-import * as Koa from 'koa';
+import { Context, Next } from 'koa';
 import * as _ from 'lodash';
-import {
-  MobilePhoneQuery,
-  MobilePhoneSaveIn,
-  MobilePhoneSaveOut,
-  MobilePhoneModifyIn,
-  MobilePhoneDelIn,
-  MobilePhoneQuery_SC,
-  MobilePhoneSaveIn_SC,
-  MobilePhoneSaveOut_SC,
-  MobilePhoneModifyIn_SC,
-  MobilePhoneDelIn_SC
-} from '../schemas/request/mobile-phone';
-import {
-  mobilePhoneService as mpService,
-  IMobilePhoneService
-} from '../service/mobile-phone';
-
 import {
   parameter,
   get,
@@ -36,7 +19,20 @@ import {
   ENUM_PARAM_IN
 } from 'koa-joi-swagger-ts';
 import * as joi from 'joi';
-import { array, string } from 'joi';
+// import { array, string } from 'joi';
+import {
+  MobilePhoneQuery,
+  MobilePhoneSaveIn,
+  MobilePhoneSaveOut,
+  MobilePhoneModifyIn,
+  MobilePhoneDelIn,
+  MobilePhoneQuery_SC,
+  MobilePhoneSaveIn_SC,
+  MobilePhoneSaveOut_SC,
+  MobilePhoneModifyIn_SC,
+  MobilePhoneDelIn_SC
+} from '../schemas/request/mobile-phone';
+import { mobilePhoneService as mpService } from '../service/mobile-phone';
 
 @controller('/api/mobile-phone')
 export class MobilePhoneController {
@@ -58,7 +54,7 @@ export class MobilePhoneController {
     ENUM_PARAM_IN.query
   )
   // @response(200, { type: 'object', items: { $ref: MobilePhoneQuery_SC } })
-  async findOne(ctx: Koa.BaseContext, next: Koa.Next) {
+  async findOne(ctx: Context, next: Next) {
     console.log('controller : ' + JSON.stringify(ctx.query._id));
     ctx.body = await mpService.findOne({ _id: ctx.query._id });
   }
@@ -66,7 +62,7 @@ export class MobilePhoneController {
   /**
    * 查找
    */
-  @get('/findAll')
+  @get('/findall')
   @tag('MobilePhone')
   @parameter(
     'model_name',
@@ -75,7 +71,7 @@ export class MobilePhoneController {
   )
   @parameter('_id', joi.string().description('id'), ENUM_PARAM_IN.query)
   // @response(200, { type: 'array', items: { $ref: MobilePhoneQuery_SC } })
-  async findAll(ctx: Koa.BaseContext, next: Koa.Next) {
+  async findAll(ctx: Context, next: Next) {
     ctx.body = await mpService.findAll({
       _id: ctx.query._id,
       model_name: ctx.query.model_name
@@ -85,24 +81,20 @@ export class MobilePhoneController {
   /**
    * 添加手机
    */
-  @post('/save')
-  @tag('MobilePhone')
-  @parameter('MobilePhone', { $ref: MobilePhoneSaveIn_SC }, ENUM_PARAM_IN.body)
-  //   @response(200, {
-  //     type: 'object',
-  //     items: { $ref: MobilePhoneSaveOut_SC }
-  //   })
-  async save(ctx: Koa.BaseContext) {
+  //   @post('/save')
+  //   @tag('MobilePhone')
+  //   @parameter('MobilePhone', { $ref: MobilePhoneSaveIn_SC }, ENUM_PARAM_IN.body)
+  async save(ctx: Context, next: Next) {
     console.log('controller ctx : ' + JSON.stringify(ctx));
-    console.log('controller : ' + JSON.stringify(ctx.body));
+    console.log('controller : ' + JSON.stringify(ctx.request.body));
 
     const newMobiles = new MobilePhoneSaveIn();
-    newMobiles.model_name = ctx.body.model_name;
-    newMobiles.size = ctx.body.size;
-    newMobiles.spec = ctx.body.spec;
-    newMobiles.ram = ctx.body.ram;
-    newMobiles.rom = ctx.body.rom;
-    newMobiles.seria_number = ctx.body.seria_number;
+    newMobiles.model_name = ctx.request.body.model_name;
+    newMobiles.size = ctx.request.body.size;
+    newMobiles.spec = ctx.request.body.spec;
+    newMobiles.ram = ctx.request.body.ram;
+    newMobiles.rom = ctx.request.body.rom;
+    newMobiles.seria_number = ctx.request.body.seria_number;
 
     ctx.body = await mpService.save(newMobiles);
   }
@@ -110,17 +102,17 @@ export class MobilePhoneController {
   /**
    * 更新手机
    */
-  async update(ctx: Koa.BaseContext, next: Koa.Next) {
-    console.log('controller : ' + JSON.stringify(ctx.body));
+  async update(ctx: Context, next: Next) {
+    console.log('controller : ' + JSON.stringify(ctx.request.body));
 
     const newMobiles = new MobilePhoneModifyIn();
-    newMobiles._id = ctx.body._id;
-    newMobiles.model_name = ctx.body.model_name;
-    newMobiles.size = ctx.body.size;
-    newMobiles.spec = ctx.body.spec;
-    newMobiles.ram = ctx.body.ram;
-    newMobiles.rom = ctx.body.rom;
-    newMobiles.seria_number = ctx.body.seria_number;
+    newMobiles._id = ctx.request.body._id;
+    newMobiles.model_name = ctx.request.body.model_name;
+    newMobiles.size = ctx.request.body.size;
+    newMobiles.spec = ctx.request.body.spec;
+    newMobiles.ram = ctx.request.body.ram;
+    newMobiles.rom = ctx.request.body.rom;
+    newMobiles.seria_number = ctx.request.body.seria_number;
 
     ctx.body = await mpService.update(_.toString(newMobiles._id), newMobiles);
   }
@@ -128,11 +120,11 @@ export class MobilePhoneController {
   /**
    * 删除手机
    */
-  async delete(ctx: Koa.BaseContext, next: Koa.Next) {
+  async delete(ctx: Context, next: Next) {
     console.log('controller : ' + JSON.stringify(ctx.query._id));
 
     const delMobile = new MobilePhoneDelIn();
-    // delMobile._id = ctx.body._id;
+    // delMobile._id = ctx.request.body._id;
     delMobile._id = _.toString(ctx.query._id);
 
     ctx.body = await mpService.delete(delMobile);

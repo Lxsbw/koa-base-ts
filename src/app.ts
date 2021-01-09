@@ -8,7 +8,6 @@
 import Koa from 'koa';
 import logger from 'koa-logger';
 import bodyparser from 'koa-bodyparser';
-// import body from 'koa-body';
 import json from 'koa-json';
 // import * as mongoose from 'mongoose';
 import { connect as MongoConnect } from 'mongoose';
@@ -16,8 +15,6 @@ import { appRouters } from './routes/router'; // 路由
 import { sysConfig, getMongoUrl } from './config/config.default'; // 配置
 import { ControllerMap } from './handle/koaswagger';
 import { KJSRouter } from 'koa-joi-swagger-ts';
-import Router from 'koa-router';
-
 class App {
   public app: Koa;
 
@@ -46,25 +43,23 @@ class App {
       paths: {},
       definitions: {}
     });
-
     ControllerMap(router);
     router.setSwaggerFile('swagger.json');
     router.loadSwaggerUI('/api-docs/swagger');
     console.log('swagger:' + JSON.stringify(router.getSwaggerFile()));
     // fs.writeFileSync('./swagger.json', JSON.stringify(router.getSwaggerFile()));
-
     this.app
       .use(router.getRouter().routes())
       .use(router.getRouter().allowedMethods());
   }
 
   private middleware(): void {
-    this.app.use(
-      bodyparser({
-        enableTypes: ['json', 'form', 'text']
-      })
-    );
-    // this.app.use(body());
+    // this.app.use(
+    //   bodyparser({
+    //     enableTypes: ['json', 'form', 'text']
+    //   })
+    // );
+    this.app.use(bodyparser());
     this.app.use(json());
     this.app.use(logger());
     this.app.use(require('koa-static')(__dirname + '/public'));
@@ -79,13 +74,6 @@ class App {
   }
 
   private routes(): void {
-    // const re = new Router();
-    // re.get('/', async (ctx: Koa.Context, next: Koa.Next) => {
-    //   ctx.body = 'Hello Koa 2 TypeScript!';
-    // });
-
-    // this.app.use(re.routes()).use(re.allowedMethods());
-
     this.app.use(appRouters.routes());
     this.app.use(appRouters.allowedMethods());
   }

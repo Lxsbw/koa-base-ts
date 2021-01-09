@@ -5,20 +5,20 @@
  * @Last Modified time: 2021-01-09 01:26:33
  */
 
-import * as Koa from 'koa';
-import Router from 'koa-router';
+import { Context, Next } from 'koa';
+import KoaRouter from 'koa-router';
 import { MobilePhone } from '../controller/mobile-phone';
 
 class AppRouter {
-  public appRouter: Router;
+  public appRouter: KoaRouter;
 
   public constructor() {
-    this.appRouter = new Router();
+    this.appRouter = new KoaRouter();
     this.init();
   }
 
   private init() {
-    this.appRouter.get('/', async (ctx: Koa.BaseContext, next: Koa.Next) => {
+    this.appRouter.get('/', async (ctx: Context, next: Next) => {
       ctx.body = 'Hello Koa 2 TypeScript!';
     });
 

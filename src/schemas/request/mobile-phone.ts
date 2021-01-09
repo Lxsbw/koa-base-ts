@@ -35,10 +35,6 @@ export class MobilePhoneQuery_SC {
   rom = joi.number().description('空间');
   seria_number = joi.string().description('序列号');
 }
-// @definition('MobilePhoneQuery', '手机参数(查询结果)')
-// export class MobilePhoneQueryArr_SC {
-//   list = joi.string().description('id');
-// }
 
 // 创建手机-输入参数'
 export class MobilePhoneSaveIn {
