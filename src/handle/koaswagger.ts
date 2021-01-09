@@ -7,17 +7,23 @@
 
 import { KJSRouter } from 'koa-joi-swagger-ts';
 import { MobilePhoneController } from '../controller/mobile-phone';
+import {
+  MobilePhoneQuery_SC,
+  MobilePhoneSaveIn_SC,
+  MobilePhoneSaveOut_SC,
+  MobilePhoneModifyIn_SC,
+  MobilePhoneDelIn_SC
+} from '../schemas/request/mobile-phone';
 
 /**
  * 映射controller，为swagger api doc准备
  */
 export const ControllerMap = (router: KJSRouter): void => {
-  //   router.loadDefinition(UserSchema);
-  //   router.loadDefinition(AdminSchema);
-  // Or you can:
-  // router.loadDefinition([UserSchema, AdminSchema]);
-  //   router.loadController(BaseController);
-  // Process controller through pattern Decorator
+  // 模型
+  router.loadDefinition(MobilePhoneQuery_SC);
+  router.loadDefinition([MobilePhoneSaveIn_SC, MobilePhoneSaveOut_SC]);
+  router.loadDefinition(MobilePhoneModifyIn_SC);
+  router.loadDefinition(MobilePhoneDelIn_SC);
+  // Controller
   router.loadController(MobilePhoneController /*, baseControllerFunction*/);
-  //   router.loadController(AdminController);
 };
