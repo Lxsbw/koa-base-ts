@@ -2,11 +2,11 @@
  * @Author: zhixiong.fu
  * @Date: 2021-01-08 22:06:22
  * @Last Modified by: zhixiong.fu
- * @Last Modified time: 2021-01-08 23:39:58
+ * @Last Modified time: 2021-01-09 01:26:33
  */
 
 import * as Koa from 'koa';
-import * as Router from 'koa-router';
+import Router from 'koa-router';
 import { MobilePhone } from '../controller/mobile-phone';
 
 class AppRouter {

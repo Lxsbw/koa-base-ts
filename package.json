@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run build && node dist/app.js",
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc && cp -rv src/public dist/public",
     "dev": "nodemon --watch 'src/' -e ts --exec ts-node ./src/app.ts",
     "prd": "pm2 start dist/app.js --name=koa-base-ts",
     "stop": "pm2 stop koa-base-ts && pm2 delete koa-base-ts",
@@ -16,9 +16,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "joi": "^14.3.1",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "koa-convert": "^2.0.0",
+    "koa-joi-swagger-ts": "^1.2.2",
     "koa-json": "^2.0.2",
     "koa-logger": "^3.2.1",
     "koa-onerror": "^4.1.0",
@@ -30,6 +32,7 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
+    "@types/joi": "^14.3.3",
     "@types/koa": "^2.11.6",
     "@types/koa-bodyparser": "^4.3.0",
     "@types/koa-convert": "^1.2.3",

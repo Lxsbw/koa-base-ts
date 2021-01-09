@@ -2,7 +2,7 @@
  * @Author: zhixiong.fu
  * @Date: 2021-01-08 21:42:05
  * @Last Modified by: zhixiong.fu
- * @Last Modified time: 2021-01-09 00:28:29
+ * @Last Modified time: 2021-01-09 14:11:17
  */
 
 import * as Koa from 'koa';
@@ -19,6 +19,22 @@ import {
   IMobilePhoneService
 } from '../service/mobile-phone';
 
+import {
+  parameter,
+  get,
+  post,
+  del,
+  controller,
+  definition,
+  summary,
+  response,
+  tag,
+  ENUM_PARAM_IN
+} from 'koa-joi-swagger-ts';
+import * as joi from 'joi';
+import { array, string } from 'joi';
+
+@controller('/api/mobile-phone')
 export class MobilePhoneController {
   constructor() {
     console.log('MobilePhoneController初始化');
@@ -30,6 +46,14 @@ export class MobilePhoneController {
   /**
    * id查找
    */
+  @tag('MobilePhone')
+  @get('/findone')
+  @parameter(
+    '_id',
+    joi.string().required().description('_id'),
+    ENUM_PARAM_IN.query
+  )
+  // @response(200, { type: 'array', items: { $ref: UserSchema } })
   async findOne(ctx: Koa.BaseContext, next: Koa.Next) {
     console.log('controller : ' + JSON.stringify(ctx.query._id));
     ctx.body = await mpService.findOne({ _id: ctx.query._id });

@@ -2,16 +2,23 @@
  * @Author: zhixiong.fu
  * @Date: 2021-01-08 21:19:14
  * @Last Modified by: zhixiong.fu
- * @Last Modified time: 2021-01-08 23:58:50
+ * @Last Modified time: 2021-01-09 14:06:12
  */
 
-import * as Koa from 'koa';
-import * as logger from 'koa-logger';
-import * as bodyparser from 'koa-bodyparser';
-import * as json from 'koa-json';
-import * as mongoose from 'mongoose';
+import Koa from 'koa';
+import logger from 'koa-logger';
+import bodyparser from 'koa-bodyparser';
+import json from 'koa-json';
+// import * as mongoose from 'mongoose';
+import { connect as MongoConnect } from 'mongoose';
 import { appRouters } from './routes/router'; // 路由
 import { sysConfig, getMongoUrl } from './config/config.default'; // 配置
+import { ControllerMap } from './handle/koaswagger';
+
+import { KJSRouter } from 'koa-joi-swagger-ts';
+// import * as joi from 'joi';
+import * as fs from 'fs';
+// import { array, string } from 'joi';
 
 class App {
   public app: Koa;
@@ -20,10 +27,37 @@ class App {
     console.log('app初始化');
 
     this.app = new Koa();
+    this.swaggerInit();
     this.middleware();
     this.routes();
     this.mongo();
     this.launchConf();
+  }
+
+  private swaggerInit(): void {
+    const router = new KJSRouter({
+      swagger: '2.0',
+      info: {
+        description: 'This is a sample server',
+        title: 'Swagger',
+        version: '1.0.0'
+      },
+      // host: `${sysConfig.host}:${sysConfig.port}`,
+      basePath: '',
+      schemes: ['http', 'https'],
+      paths: {},
+      definitions: {}
+    });
+
+    ControllerMap(router);
+    router.setSwaggerFile('swagger.json');
+    router.loadSwaggerUI('/api-docs/swagger');
+    console.log('swagger:' + JSON.stringify(router.getSwaggerFile()));
+    // fs.writeFileSync('./swagger.json', JSON.stringify(router.getSwaggerFile()));
+
+    this.app
+      .use(router.getRouter().routes())
+      .use(router.getRouter().allowedMethods());
   }
 
   private middleware(): void {
@@ -52,15 +86,15 @@ class App {
 
   private mongo(): void {
     console.log(getMongoUrl());
-    mongoose
-      .connect(getMongoUrl(), {
-        useCreateIndex: true,
-        poolSize: 5, // 连接池中维护的连接数
-        useNewUrlParser: true,
-        autoIndex: false,
-        useUnifiedTopology: true
-        // keepAlive: 120,
-      })
+
+    MongoConnect(getMongoUrl(), {
+      useCreateIndex: true,
+      poolSize: 5, // 连接池中维护的连接数
+      useNewUrlParser: true,
+      autoIndex: false,
+      useUnifiedTopology: true
+      // keepAlive: 120,
+    })
       .then((open) => {
         console.log('📚  mongodb is launching...');
       })
