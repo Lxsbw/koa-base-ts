@@ -7,7 +7,7 @@
     "strict": true,
     // "sourceMap": true,
     "esModuleInterop": true,
-    "experimentalDecorators": true,
+    "experimentalDecorators": true, // 特性支持
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
