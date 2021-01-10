@@ -2,17 +2,11 @@
  * @Author: zhixiong.fu
  * @Date: 2021-01-08 21:40:49
  * @Last Modified by: zhixiong.fu
- * @Last Modified time: 2021-01-08 21:56:01
+ * @Last Modified time: 2021-01-10 16:12:32
  */
-import {
-  definition,
-  summary,
-  response,
-  tag,
-  ENUM_PARAM_IN
-} from 'koa-joi-swagger-ts';
+import { definition } from 'koa-joi-swagger-ts';
 import * as joi from 'joi';
-import { array, string } from 'joi';
+// import { array, string } from 'joi';
 
 // 手机参数(查询结果)
 export class MobilePhoneQuery {
@@ -27,7 +21,7 @@ export class MobilePhoneQuery {
 }
 @definition('MobilePhoneQuery', '手机参数(查询结果)')
 export class MobilePhoneQuery_SC {
-  // _id = joi.string().description('id');
+  _id = joi.string().description('id');
   model_name = joi.string().description('手机型号');
   size = joi.string().description('尺寸');
   spec = joi.string().description('规格');
@@ -48,12 +42,12 @@ export class MobilePhoneSaveIn {
 }
 @definition('MobilePhoneSaveIn', '创建手机-输入参数')
 export class MobilePhoneSaveIn_SC {
-  model_name = joi.string().required().description('手机型号');
-  size = joi.string().required().description('尺寸');
-  spec = joi.string().required().description('规格');
-  ram = joi.number().description('内存');
-  rom = joi.number().description('空间');
-  seria_number = joi.string().description('序列号');
+  model_name = joi.string().required().description('手机型号').example('xx');
+  size = joi.string().required().description('尺寸').example('4.7');
+  spec = joi.string().required().description('规格').example('blue');
+  ram = joi.number().description('内存').example(4);
+  rom = joi.number().description('空间').example(64);
+  seria_number = joi.string().description('序列号').example('00010');
 }
 
 // 创建手机-输出参数

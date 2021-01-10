@@ -2,7 +2,7 @@
  * @Author: zhixiong.fu
  * @Date: 2021-01-08 21:42:05
  * @Last Modified by: zhixiong.fu
- * @Last Modified time: 2021-01-09 14:11:17
+ * @Last Modified time: 2021-01-10 15:46:00
  */
 
 import { Context, Next } from 'koa';
@@ -11,15 +11,17 @@ import {
   parameter,
   get,
   post,
+  put,
   del,
   controller,
   summary,
+  description,
   response,
   tag,
   ENUM_PARAM_IN
 } from 'koa-joi-swagger-ts';
 import * as joi from 'joi';
-// import { array, string } from 'joi';
+import { array, string, object } from 'joi';
 import {
   MobilePhoneQuery,
   MobilePhoneSaveIn,
@@ -48,6 +50,8 @@ export class MobilePhoneController {
    */
   @get('/findone')
   @tag('MobilePhone')
+  @summary('id查找')
+  @description('id查找')
   @parameter(
     '_id',
     joi.string().required().description('id'),
@@ -64,6 +68,8 @@ export class MobilePhoneController {
    */
   @get('/findall')
   @tag('MobilePhone')
+  @summary('查找')
+  @description('查找')
   @parameter(
     'model_name',
     joi.string().description('手机型号'),
@@ -81,11 +87,16 @@ export class MobilePhoneController {
   /**
    * 添加手机
    */
-  //   @post('/save')
-  //   @tag('MobilePhone')
-  //   @parameter('MobilePhone', { $ref: MobilePhoneSaveIn_SC }, ENUM_PARAM_IN.body)
+  @post('/save')
+  @tag('MobilePhone')
+  @summary('添加手机')
+  @description('添加手机')
+  @parameter(
+    'MobilePhone',
+    { type: 'object', required: true, items: { $ref: MobilePhoneSaveIn_SC } },
+    ENUM_PARAM_IN.body
+  )
   async save(ctx: Context, next: Next) {
-    console.log('controller ctx : ' + JSON.stringify(ctx));
     console.log('controller : ' + JSON.stringify(ctx.request.body));
 
     const newMobiles = new MobilePhoneSaveIn();
@@ -102,6 +113,15 @@ export class MobilePhoneController {
   /**
    * 更新手机
    */
+  @put('/update')
+  @tag('MobilePhone')
+  @summary('更新手机')
+  @description('更新手机')
+  @parameter(
+    'MobilePhoneUpd',
+    { type: 'object', required: true, items: { $ref: MobilePhoneModifyIn_SC } },
+    ENUM_PARAM_IN.body
+  )
   async update(ctx: Context, next: Next) {
     console.log('controller : ' + JSON.stringify(ctx.request.body));
 
@@ -120,12 +140,20 @@ export class MobilePhoneController {
   /**
    * 删除手机
    */
+  @del('/delete')
+  @tag('MobilePhone')
+  @summary('删除手机')
+  @description('删除手机')
+  @parameter(
+    'MobilePhoneDel',
+    { type: 'object', required: true, items: { $ref: MobilePhoneDelIn_SC } },
+    ENUM_PARAM_IN.body
+  )
   async delete(ctx: Context, next: Next) {
-    console.log('controller : ' + JSON.stringify(ctx.query._id));
+    console.log('controller : ' + JSON.stringify(ctx.request.body));
 
     const delMobile = new MobilePhoneDelIn();
-    // delMobile._id = ctx.request.body._id;
-    delMobile._id = _.toString(ctx.query._id);
+    delMobile._id = _.toString(ctx.request.body._id);
 
     ctx.body = await mpService.delete(delMobile);
   }

@@ -2,7 +2,7 @@
  * @Author: zhixiong.fu
  * @Date: 2021-01-08 21:19:14
  * @Last Modified by: zhixiong.fu
- * @Last Modified time: 2021-01-09 14:06:12
+ * @Last Modified time: 2021-01-10 15:50:23
  */
 
 import Koa from 'koa';
@@ -22,8 +22,8 @@ class App {
     console.log('app初始化');
 
     this.app = new Koa();
-    this.swaggerInit();
     this.middleware();
+    this.swaggerInit();
     this.routes();
     this.mongo();
     this.launchConf();
@@ -33,9 +33,18 @@ class App {
     const router = new KJSRouter({
       swagger: '2.0',
       info: {
-        description: 'This is a sample server',
-        title: 'Swagger',
-        version: '1.0.0'
+        description:
+          'This is a sample server Koa2 server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters.',
+        title: 'Koa2 TypeScript Swagger',
+        version: '1.0.0',
+        concat: {
+          email: 'lxsbw@outlook.com'
+        },
+        // 开源协议
+        license: {
+          name: 'Apache 2.0',
+          url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+        }
       },
       host: `${sysConfig.host}:${sysConfig.port}`,
       basePath: '',
@@ -54,12 +63,12 @@ class App {
   }
 
   private middleware(): void {
-    // this.app.use(
-    //   bodyparser({
-    //     enableTypes: ['json', 'form', 'text']
-    //   })
-    // );
-    this.app.use(bodyparser());
+    this.app.use(
+      bodyparser({
+        enableTypes: ['json', 'form', 'text']
+      })
+    );
+    // this.app.use(bodyparser());
     this.app.use(json());
     this.app.use(logger());
     this.app.use(require('koa-static')(__dirname + '/public'));
