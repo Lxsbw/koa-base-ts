@@ -1,8 +1,7 @@
 {
   "name": "koa-base-ts",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "Node.js & Koa2 & TypeScript & MVC & mongoose & swagger & joi",
   "scripts": {
     "start": "npm run build && node dist/app.js",
     "build": "rimraf dist && tsc",
