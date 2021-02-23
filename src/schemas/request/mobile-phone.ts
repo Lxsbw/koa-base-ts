@@ -4,7 +4,7 @@
  * @Last Modified by: zhixiong.fu
  * @Last Modified time: 2021-01-10 16:12:32
  */
-import { definition } from 'koa-joi-swagger-ts';
+import { definition } from '@lxsbw/koa-joi-swagger-ts';
 import * as joi from 'joi';
 // import { array, string } from 'joi';
 

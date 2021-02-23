@@ -14,7 +14,7 @@ import { connect as MongoConnect } from 'mongoose';
 import { appRouters } from './routes/router'; // 路由
 import { sysConfig, getMongoUrl } from './config/config.default'; // 配置
 import { ControllerMap } from './handle/koaswagger';
-import { KJSRouter } from 'koa-joi-swagger-ts';
+import { KJSRouter } from '@lxsbw/koa-joi-swagger-ts';
 class App {
   public app: Koa;
 
@@ -46,7 +46,7 @@ class App {
           url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
         }
       },
-      host: `${sysConfig.host}:${sysConfig.port}`,
+      // host: `${sysConfig.host}:${sysConfig.port}`,
       basePath: '',
       schemes: ['http', 'https'],
       paths: {},

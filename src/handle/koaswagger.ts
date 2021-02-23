@@ -5,7 +5,7 @@
  * @Last Modified time: 2021-01-09 14:09:27
  */
 
-import { KJSRouter } from 'koa-joi-swagger-ts';
+import { KJSRouter } from '@lxsbw/koa-joi-swagger-ts';
 import { MobilePhoneController } from '../controller/mobile-phone';
 import {
   MobilePhoneQuery_SC,

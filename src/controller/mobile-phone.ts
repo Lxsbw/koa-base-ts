@@ -19,7 +19,7 @@ import {
   parameter,
   response,
   ENUM_PARAM_IN
-} from 'koa-joi-swagger-ts';
+} from '@lxsbw/koa-joi-swagger-ts';
 import * as joi from 'joi';
 // import { array, string, object } from 'joi';
 import {
