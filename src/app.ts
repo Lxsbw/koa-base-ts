@@ -50,7 +50,15 @@ class App {
       basePath: '',
       schemes: ['http', 'https'],
       paths: {},
-      definitions: {}
+      definitions: {},
+      securityDefinitions: {
+        JWT: {
+          type: 'apiKey',
+          in: 'header',
+          name: 'Authorization'
+          // description: ''
+        }
+      }
     });
     ControllerMap(router);
     router.setSwaggerFile('swagger.json');
