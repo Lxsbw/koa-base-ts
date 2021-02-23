@@ -2,15 +2,14 @@
  * @Author: zhixiong.fu
  * @Date: 2021-01-08 21:19:14
  * @Last Modified by: zhixiong.fu
- * @Last Modified time: 2021-01-10 15:50:23
+ * @Last Modified time: 2021-02-23 23:02:29
  */
 
-import Koa from 'koa';
-import logger from 'koa-logger';
-import bodyparser from 'koa-bodyparser';
-import json from 'koa-json';
-// import * as mongoose from 'mongoose';
-import { connect as MongoConnect } from 'mongoose';
+import * as Koa from 'koa';
+import * as logger from 'koa-logger';
+import * as bodyparser from 'koa-bodyparser';
+import * as json from 'koa-json';
+import * as mongoose from 'mongoose';
 import { appRouters } from './routes/router'; // 路由
 import { sysConfig, getMongoUrl } from './config/config.default'; // 配置
 import { ControllerMap } from './handle/koaswagger';
@@ -98,14 +97,15 @@ class App {
   private mongo(): void {
     console.log(getMongoUrl());
 
-    MongoConnect(getMongoUrl(), {
-      useCreateIndex: true,
-      poolSize: 5, // 连接池中维护的连接数
-      useNewUrlParser: true,
-      autoIndex: false,
-      useUnifiedTopology: true
-      // keepAlive: 120,
-    })
+    mongoose
+      .connect(getMongoUrl(), {
+        useCreateIndex: true,
+        poolSize: 5, // 连接池中维护的连接数
+        useNewUrlParser: true,
+        autoIndex: false,
+        useUnifiedTopology: true
+        // keepAlive: 120,
+      })
       .then((open) => {
         console.log('📚  mongodb is launching...');
       })

@@ -6,7 +6,7 @@
  */
 
 import { Context, Next } from 'koa';
-import KoaRouter from 'koa-router';
+import * as KoaRouter from 'koa-router';
 import { MobilePhone } from '../controller/mobile-phone';
 
 class AppRouter {
