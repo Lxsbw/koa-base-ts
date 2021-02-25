@@ -12,8 +12,8 @@ import * as json from 'koa-json';
 import * as mongoose from 'mongoose';
 import { appRouters } from './routes/router'; // 路由
 import { sysConfig, getMongoUrl } from './config/config.default'; // 配置
-import { ControllerMap } from './handle/koaswagger';
-import { KJSRouter } from '@lxsbw/koa-joi-swagger-ts';
+import { ControllerMap } from './handle/koaSwagger';
+import { KoaSwaggerRouter } from '@lxsbw/koa-joi-swagger-ts';
 class App {
   public app: Koa;
 
@@ -29,7 +29,7 @@ class App {
   }
 
   private swaggerInit(): void {
-    const router = new KJSRouter({
+    const router = new KoaSwaggerRouter({
       swagger: '2.0',
       info: {
         description:

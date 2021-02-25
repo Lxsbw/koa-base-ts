@@ -5,7 +5,7 @@
  * @Last Modified time: 2021-01-09 14:09:27
  */
 
-import { KJSRouter } from '@lxsbw/koa-joi-swagger-ts';
+import { KoaSwaggerRouter } from '@lxsbw/koa-joi-swagger-ts';
 import { MobilePhoneController } from '../controller/mobile-phone';
 import {
   MobilePhoneQuery_SC,
@@ -18,7 +18,7 @@ import {
 /**
  * 映射controller，为swagger api doc准备
  */
-export const ControllerMap = (router: KJSRouter): void => {
+export const ControllerMap = (router: KoaSwaggerRouter): void => {
   // 模型
   router.loadDefinition(MobilePhoneQuery_SC);
   router.loadDefinition([MobilePhoneSaveIn_SC, MobilePhoneSaveOut_SC]);
