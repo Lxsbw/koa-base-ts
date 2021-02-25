@@ -42,10 +42,10 @@
     reflect-metadata "^0.1.12"
     tslib "^1.8.1"
 
-"@lxsbw/koa-joi-swagger-ts@^1.0.9":
-  version "1.0.9"
-  resolved "https://registry.npm.taobao.org/@lxsbw/koa-joi-swagger-ts/download/@lxsbw/koa-joi-swagger-ts-1.0.9.tgz?cache=0&sync_timestamp=1614225639963&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40lxsbw%2Fkoa-joi-swagger-ts%2Fdownload%2F%40lxsbw%2Fkoa-joi-swagger-ts-1.0.9.tgz#d02cfa55dd416d94d47c7a22fc9cdedf741d757c"
-  integrity sha1-0Cz6Vd1BbZTUfHoi/Jze33QddXw=
+"@lxsbw/koa-joi-swagger-ts@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.npm.taobao.org/@lxsbw/koa-joi-swagger-ts/download/@lxsbw/koa-joi-swagger-ts-1.0.10.tgz?cache=0&sync_timestamp=1614226468130&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40lxsbw%2Fkoa-joi-swagger-ts%2Fdownload%2F%40lxsbw%2Fkoa-joi-swagger-ts-1.0.10.tgz#757dbb35e63b59dd1a83a5b067a8abdf8e860b21"
+  integrity sha1-dX27NeY7Wd0ag6WwZ6ir346GCyE=
   dependencies:
     joi "^14.3.1"
     joi-to-swagger "^3.2.0"
